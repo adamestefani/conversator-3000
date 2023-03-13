@@ -3,7 +3,6 @@ const config = require('./config/config.json');
 
 const sendMessageOpenAI = async (username, inputMessage) => {
   const configuration = new Configuration({
-    organization: process.env.OPENAI_ORGANIZATION_ID,
     apiKey: process.env.OPENAI_API_KEY,
   });
 
@@ -12,21 +11,32 @@ const sendMessageOpenAI = async (username, inputMessage) => {
   const { chatInitialMood } = config.chatOpenAI;
 
   try {
+    const messages = [{ role: 'system', content: chatInitialMood }];
+    const maxTokens = process.env.OPENAI_CHAT_MAX_TOKENS ? parseInt(process.env.OPENAI_CHAT_MAX_TOKENS) : 100;
+
+    messages.push({ role: 'user', content: inputMessage });
+
+    console.log('messages:', messages);
+
     const response = await openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
-      messages: [
-        { role: 'system', content: chatInitialMood },
-        { role: `user-${username}`, content: inputMessage },
-      ],
-      max_tokens: process.env.OPENAI_CHAT_MAX_TOKENS,
+      messages: messages,
+      max_tokens: maxTokens,
     });
-    console.log('TEST --- ChatCompletion response:', response);
-    console.log('TEST --- response message:', response.data.choices[0].message);
+    const { data } = response;
+    console.log('ChatCompletion response usage:', data.usage);
 
-    return { response: response.data.choices[0].message };
+    const responseMessage = data.choices[0].message;
+    console.log('ChatCompletion response message:', responseMessage);
+
+    return responseMessage.content;
   } catch (error) {
-    console.log('TEST --- ChatCompletion error:', error);
-    return { error: error };
+    if (error.response && error.response.data) {
+      console.log('ChatCompletion error response:', error.response.data);
+      return error.response.data;
+    }
+    console.log('ChatCompletion error:', error);
+    return error;
   }
 };
 

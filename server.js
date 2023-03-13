@@ -13,7 +13,7 @@ app.get('/health', (req, res) => {
   });
 });
 
-app.post('/sendMessageOpenAI', async (req, res) => {
+app.post('/send-message-openai', async (req, res) => {
   const { username, inputMessage } = req.body;
   const response = await sendMessageOpenAI(username, inputMessage);
   res.send(response);
