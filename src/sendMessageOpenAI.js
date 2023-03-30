@@ -29,7 +29,19 @@ const sendMessageOpenAI = async (username, inputMessage) => {
     const responseMessage = data.choices[0].message;
     console.log('ChatCompletion response message:', responseMessage);
 
-    return responseMessage.content;
+    const cleanResponse = responseMessage.content
+      .replace(/  /g, ' ')
+      .replace(/\!\n/g, '! ')
+      .replace(/\?\n/g, '? ')
+      .replace(/:\n/g, ': ')
+      .replace(/\.\n/g, '. ')
+      .replace(/,\n/g, ', ')
+      .replace(/\n/g, '; ')
+      .replace(/; ; /g, '; ');
+
+    console.log('cleanResponse: ', cleanResponse);
+
+    return cleanResponse;
   } catch (error) {
     if (error.response && error.response.data) {
       console.log('ChatCompletion error response:', error.response.data);
