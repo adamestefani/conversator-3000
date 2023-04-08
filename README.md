@@ -62,7 +62,7 @@ Feel free to change the command string to your taste.
 
 ## Documentation
 
-* [OpenAPI document](api-docs/swagger.yaml)
+* [OpenAPI document](https://editor.swagger.io/?url=https://raw.githubusercontent.com/adamestefani/conversator-3000/main/api-docs/swagger.yaml)
 
 ## Disclaimer
 
