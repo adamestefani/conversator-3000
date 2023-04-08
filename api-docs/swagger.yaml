@@ -1,0 +1,77 @@
+openapi: 3.0.3
+info:
+  title: Conversator-3000 - OpenAPI 3.0
+  description: API description for each endpoint, explaining what parameters are expected as input and how the responses look like.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3080
+paths:
+  /health:
+    get:
+      summary: Returns the application status, what port it's listening to and current version.
+      responses:
+        200:
+          description: Health check object.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: running
+                  port:
+                    type: integer
+                    example: 3080
+                  version:
+                    type: string
+                    example: 1.0.0
+  /send-message-openai:
+    get:
+      summary: Given a prompt, the model will return one or more predicted completions.
+      parameters:
+        - name: chat-username
+          in: header
+          description: username who made the request
+          required: true
+          schema:
+            type: string
+        - name: chat-message
+          in: header
+          description: input provided by the user
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Completion response.
+          content:
+            text/plain:
+              schema:
+                type: string
+    post:
+      summary: Given a prompt, the model will return one or more predicted completions.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'
+      responses:
+        200:
+          description: Completion response.
+          content:
+            text/plain:
+              schema:
+                type: string
+components:
+  schemas:
+    Message:
+      type: object
+      properties:
+        username:
+          type: string
+          description: username who made the request
+        inputMessage:
+          type: string
+          description: input provided by the user
+          
