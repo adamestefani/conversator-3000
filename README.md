@@ -45,6 +45,23 @@ cd 'conversator-3000'
 npm install
 ```
 
+## Customize the way Conversator-3000 would responde
+
+You can change the initial input, where you can ask Conversator-3000 to assume some personality, or ask it to responde your inquires in a certain way.
+The constant initial input can be customized in the [config.json](./src/config/config.json) file.
+
+For example:
+```json
+{
+  "chatOpenAI": {
+    "chatInitialMood": "You are a rapper who loves to rhyme in all your answers."
+  }
+}
+```
+Use your creativity and feel free to explore different initial inputs. Have fun with it!
+
+>**Note:** If you do any changes in the code, make sure you restart Conversator-3000.
+
 ## Run It Locally
 
 Once you have everything done from the "Get Started" section, run the Node application in your terminal: (Type this into your CMD window)
