@@ -45,7 +45,7 @@ cd 'conversator-3000'
 npm install
 ```
 
-## Customize the way Conversator-3000 would responde
+## Customize the way Conversator-3000 would respond
 
 You can change the initial input, where you can ask Conversator-3000 to assume some personality, or ask it to responde your inquires in a certain way.
 The constant initial input can be customized in the [config.json](./src/config/config.json) file.
